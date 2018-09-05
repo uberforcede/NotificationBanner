@@ -135,6 +135,7 @@ public class BaseNotificationBanner: UIView {
         }
     }
     
+
     init(style: BannerStyle, colors: BannerColorsProtocol? = nil) {
         super.init(frame: .zero)
         
@@ -161,7 +162,7 @@ public class BaseNotificationBanner: UIView {
     
     deinit {
         NotificationCenter.default.removeObserver(self,
-                                                  name: NSNotification.Name.UIDeviceOrientationDidChange,
+                                                  name: UIDevice.orientationDidChangeNotification,
                                                   object: nil)
     }
     
@@ -217,6 +218,7 @@ public class BaseNotificationBanner: UIView {
     /**
         Dismisses the NotificationBanner and shows the next one if there is one to show on the queue
     */
+
     @objc public func dismiss() {
         
         guard isDisplaying else {
@@ -241,7 +243,7 @@ public class BaseNotificationBanner: UIView {
             
             self.bannerQueue.showNext(callback: { (isEmpty) in
                 if isEmpty || self.statusBarShouldBeShown() {
-                    self.appWindow.windowLevel = UIWindowLevelNormal
+                    self.appWindow.windowLevel = UIWindow.Level.normal
                 }
             })
         }
@@ -257,6 +259,7 @@ public class BaseNotificationBanner: UIView {
         - parameter viewController: The view controller to display the notifification banner on. If nil, it will
         be placed on the main app window
     */
+
     public func show(queuePosition: QueuePosition = .back,
                      bannerPosition: BannerPosition = .top,
                      queue: NotificationBannerQueue = NotificationBannerQueue.default,
@@ -273,6 +276,7 @@ public class BaseNotificationBanner: UIView {
         banner will be displayed immediately
         - parameter bannerPosition: The position the notification banner should slide in from
     */
+
     func show(placeOnQueue: Bool,
               queuePosition: QueuePosition = .back,
               bannerPosition: BannerPosition = .top) {
@@ -291,11 +295,11 @@ public class BaseNotificationBanner: UIView {
         }
         
         NotificationCenter.default.removeObserver(self,
-                                                  name: NSNotification.Name.UIDeviceOrientationDidChange,
+                                                  name: UIDevice.orientationDidChangeNotification,
                                                   object: nil)
         NotificationCenter.default.addObserver(self,
                                                selector: #selector(onOrientationChanged),
-                                               name: NSNotification.Name.UIDeviceOrientationDidChange,
+                                               name: UIDevice.orientationDidChangeNotification,
                                                object: nil)
         
         if placeOnQueue {
@@ -306,14 +310,14 @@ public class BaseNotificationBanner: UIView {
             if let parentViewController = parentViewController {
                 parentViewController.view.addSubview(self)
                 if statusBarShouldBeShown() {
-                    appWindow.windowLevel = UIWindowLevelNormal
+                    appWindow.windowLevel = UIWindow.Level.normal
                 }
             } else {
                 appWindow.addSubview(self)
                 if statusBarShouldBeShown() && !(parentViewController == nil && bannerPosition == .top) {
-                    appWindow.windowLevel = UIWindowLevelNormal
+                    appWindow.windowLevel = UIWindow.Level.normal
                 } else {
-                    appWindow.windowLevel = UIWindowLevelStatusBar + 1
+                    appWindow.windowLevel = UIWindow.Level.statusBar + 1
                 }
             }
             
@@ -351,6 +355,7 @@ public class BaseNotificationBanner: UIView {
     /**
         Suspends a notification banner so it will not be dismissed. This happens because a new notification banner was placed in front of it on the queue.
     */
+
     func suspend() {
         NSObject.cancelPreviousPerformRequests(withTarget: self, selector: #selector(dismiss), object: nil)
         isSuspended = true
@@ -360,6 +365,7 @@ public class BaseNotificationBanner: UIView {
     /**
         Resumes a notification banner immediately.
     */
+
     func resume() {
         if autoDismiss {
             self.perform(#selector(dismiss), with: nil, afterDelay: self.duration)
@@ -389,6 +395,7 @@ public class BaseNotificationBanner: UIView {
     /**
         Called when a notification banner is tapped
     */
+
     @objc private dynamic func onTapGestureRecognizer() {
         if dismissOnTap {
             dismiss()
@@ -400,6 +407,7 @@ public class BaseNotificationBanner: UIView {
     /**
         Called when a notification banner is swiped up
     */
+
     @objc private dynamic func onSwipeUpGestureRecognizer() {
         if dismissOnSwipeUp {
             dismiss()

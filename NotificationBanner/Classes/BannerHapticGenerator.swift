@@ -31,9 +31,10 @@ open class BannerHapticGenerator: NSObject {
         Generates a haptic based on the given haptic
         -parameter haptic: The haptic strength to generate when a banner is shown
      */
+
     open class func generate(_ haptic: BannerHaptic) {
         
-        var style: UIImpactFeedbackStyle!
+        var style: UIImpactFeedbackGenerator.FeedbackStyle!
         
         switch haptic {
         case .light:
@@ -45,11 +46,10 @@ open class BannerHapticGenerator: NSObject {
         case .none:
             return
         }
-        
-        if #available(iOS 10.0, *) {
-            let feedbackGenerator = UIImpactFeedbackGenerator(style: style)
-            feedbackGenerator.prepare()
-            feedbackGenerator.impactOccurred()
-        }
+
+        let feedbackGenerator = UIImpactFeedbackGenerator(style: style)
+        feedbackGenerator.prepare()
+        feedbackGenerator.impactOccurred()
+
     }
 }

@@ -40,6 +40,7 @@ public class StatusBarNotificationBanner: BaseNotificationBanner {
         }
     }
     
+
     override init(style: BannerStyle, colors: BannerColorsProtocol? = nil) {
         super.init(style: style, colors: colors)
 
@@ -61,6 +62,7 @@ public class StatusBarNotificationBanner: BaseNotificationBanner {
         updateMarqueeLabelsDurations()
     }
     
+
     public convenience init(title: String,
                             style: BannerStyle = .info,
                             colors: BannerColorsProtocol? = nil) {
@@ -68,6 +70,7 @@ public class StatusBarNotificationBanner: BaseNotificationBanner {
         titleLabel!.text = title
     }
     
+
     public convenience init(attributedTitle: NSAttributedString,
                             style: BannerStyle = .info,
                             colors: BannerColorsProtocol? = nil) {

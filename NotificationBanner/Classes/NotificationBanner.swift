@@ -158,6 +158,7 @@ public class NotificationBanner: BaseNotificationBanner {
         subtitleLabel?.attributedText = attributedSubtitle
     }
     
+
     public init(customView: UIView) {
         super.init(style: .none)
         contentView.addSubview(customView)

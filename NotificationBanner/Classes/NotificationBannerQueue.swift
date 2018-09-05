@@ -42,6 +42,7 @@ open class NotificationBannerQueue: NSObject {
         -parameter queuePosition: The position to show the notification banner. If the position is .front, the
         banner will be displayed immediately
     */
+
     func addBanner(_ banner: BaseNotificationBanner, queuePosition: QueuePosition) {
         
         if queuePosition == .back {
@@ -67,6 +68,7 @@ open class NotificationBannerQueue: NSObject {
         Shows the next notificaiton banner on the queue if one exists
         -parameter callback: The closure to execute after a banner is shown or when the queue is empty
     */
+
     func showNext(callback: ((_ isEmpty: Bool) -> Void)) {
 
         if !banners.isEmpty {
